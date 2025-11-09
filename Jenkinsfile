@@ -11,6 +11,21 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/falakdesai/python-onepiece-app'
             }
         }
+        
+        stage("python build") {
+            steps {
+                echo "Building the Python application"
+                sh '''
+                rm -rf venv # Remove existing virtual environment if any
+                python -m venv venv
+                . venv/bin/activate
+                pip install -r requirements.txt
+                '''
+            }
+        }
+
+
+
     }
 
 }
