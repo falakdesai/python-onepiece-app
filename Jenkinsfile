@@ -34,6 +34,21 @@ pipeline {
             }
         }
 
+        stage("sonarQube scan") {
+            environment { SONARQUBE_SCANNER_HOME = tool 'sonar-scanner' }
+            steps {
+                echo "Running SonarQube scan for code quality analysis"
+                withSonarQubeEnv('sonarqube-local') {
+                    sh '''
+                    . venv/bin/activate
+                    $SONARQUBE_SCANNER_HOME/bin/sonar-scanner \
+                    -Dsonar.projectKey=jenkins1234 \
+                    -Dsonar.sources=. \
+                    '''
+                }
+            }
+        }
+
 
 
     }
