@@ -58,7 +58,6 @@ pipeline {
                     . venv/bin/activate
                     $SONARQUBE_SCANNER_HOME/bin/sonar-scanner \
                     -Dsonar.projectKey= Jenkins \
-                    -Dsonar.projectKey=Jenkins \
                     -Dsonar.sources=. \
                     -Dsonarqualitygate.wait=false
                     '''
