@@ -78,6 +78,21 @@ pipeline {
             }
         }
 
+        stage("Trivy security scan") {
+            steps {
+                echo "Performing security scan using Trivy"
+                sh '''
+                trivy image --format table --severity HIGH,CRITICAL \
+                --output trivy-report.txt falakdesai2/python-onepiece-app:latest
+                '''
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'trivy-report.txt'
+                }
+            }
+        }
+
 
 
     }
