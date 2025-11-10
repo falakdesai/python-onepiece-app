@@ -49,6 +49,23 @@ pipeline {
             }
         }
 
+        stage("publish sonarQube quality gate") {
+            environment { SONARQUBE_SCANNER_HOME = tool 'sonar-scanner' }
+            steps {
+                echo "Re-running SonarQube scan for code quality analysis"
+                withSonarQubeEnv('sonarqube-local') {
+                    sh '''
+                    . venv/bin/activate
+                    $SONARQUBE_SCANNER_HOME/bin/sonar-scanner \
+                    -Dsonar.projectKey= Jenkins \
+                    -Dsonar.projectKey=Jenkins \
+                    -Dsonar.sources=. \
+                    -Dsonarqualitygate.wait=false
+                    '''
+                }
+            }
+        }
+
 
 
     }
